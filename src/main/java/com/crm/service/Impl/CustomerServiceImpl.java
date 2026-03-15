@@ -3,7 +3,11 @@ package com.crm.service.Impl;
 import com.crm.Entity.Customer;
 import com.crm.Repository.CustomerRepository;
 import com.crm.service.CustomerService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,8 +25,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+    public Page<Customer> getAllCustomers(Pageable page) {
+        return customerRepository.findAll(page);
     }
 
     @Override

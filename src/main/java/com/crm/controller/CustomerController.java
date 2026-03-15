@@ -2,13 +2,16 @@ package com.crm.controller;
 
 import com.crm.Entity.Customer;
 import com.crm.service.CustomerService;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Controller
+
 public class CustomerController {
 
     private CustomerService customerService;
@@ -19,9 +22,28 @@ public class CustomerController {
     }
 
     //    Handler method to Handle list customers
-    @GetMapping("/customers")
-    public String listCustomers(Model themodel){
-        themodel.addAttribute("customers", customerService.getAllCustomers());
+//    @GetMapping("/")
+//    public String listCustomers(@RequestParam(defaultValue = "1") int pageNumber,@RequestParam(defaultValue = "5") int pageSize,  Model themodel){
+//
+//        themodel.addAttribute("customers", customerService.getAllCustomers(PageRequest.of(pageNumber-1,pageSize)));
+//        return "customers";
+//    }
+
+    @GetMapping("/")
+    public String listCustomers(
+            @RequestParam(defaultValue = "1") int pageNumber,
+            @RequestParam(defaultValue = "5") int pageSize,
+            Model model){
+        int pageIndex = Math.max(pageNumber - 1, 0);
+        System.out.println("pagenumber : "+pageIndex);
+        System.out.println("pageSize : "+pageSize);
+
+        Page<Customer> page = customerService.getAllCustomers(PageRequest.of(pageIndex,pageSize));
+
+        model.addAttribute("customers", page.getContent());
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("totalPages", page.getTotalPages());
+
         return "customers";
     }
 

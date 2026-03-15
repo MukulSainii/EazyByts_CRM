@@ -70,4 +70,15 @@ public class Customer {
     public void setCompany(String company) {
         this.company = company;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", company='" + company + '\'' +
+                '}';
+    }
 }
