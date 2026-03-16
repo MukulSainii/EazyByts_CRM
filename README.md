@@ -13,7 +13,6 @@ logging.level.org.hibernate.SQL=off
 logging.level.p6spy=DEBUG
 logging.level.com.p6spy=DEBUG
 
-# spring.mvc.log-request-details=true
 
 # for seeing execuation of spring on console help for debugging
 logging.level.org.springframework.web=DEBUG
