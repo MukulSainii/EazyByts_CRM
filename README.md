@@ -1,4 +1,4 @@
-# craete application-dev.properties (inside src/main/resources) and add below properties
+# create application-dev.properties (inside src/main/resources) and add below properties
 spring.datasource.username=
 spring.datasource.password=
 spring.datasource.url=jdbc:p6spy:mysql://localhost:3306/crm
