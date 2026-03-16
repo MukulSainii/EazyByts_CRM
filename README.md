@@ -9,7 +9,7 @@ spring.datasource.driver-class-name=com.p6spy.engine.spy.P6SpyDriver
 spring.jpa.show-sql=false
 logging.level.org.hibernate.SQL=off
 
-# Enable P6Spy logging
+#Enable P6Spy logging
 logging.level.p6spy=DEBUG
 logging.level.com.p6spy=DEBUG
 
