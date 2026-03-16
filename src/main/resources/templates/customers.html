@@ -124,8 +124,6 @@
             position: absolute;
             color: #333;
         }
-
-
     </style>
 
 </head>
@@ -163,7 +161,7 @@
         </thead>
 
         <tbody>
-        <tr th:each="customer : ${customers}">
+        <tr th:each="customer : ${page.getContent()}">
             <td th:text="${customer.firstName}"></td>
             <td th:text="${customer.lastName}"></td>
             <td th:text="${customer.email}"></td>
@@ -174,74 +172,65 @@
 
                 <a th:href="@{/customers/{id}(id=${customer.id})}"
                    class="delete-button">Delete</a>
-
             </td>
         </tr>
         </tbody>
 
     </table>
     <div class="row mt-4">
-
         <!-- LEFT SIDE PAGE NUMBERS -->
         <div class="col-md-6">
-
             <ul class="pagination">
-
-                <!-- FIRST BUTTON -->
-                <li class="page-item" th:if="${currentPage > 0}">
+                <!-- Previous -->
+                <li class="page-item" th:if="${currentPage > 1}">
+                    <!-- for next button-->
                     <a class="page-link"
-                       th:href="@{/(pageNumber=0,pageSize=5)}">First</a>
+                       th:href="@{/(pageNumber=${1},pageSize=${5})}">
+                        first
+                    </a>
                 </li>
-
-                <!-- PAGE NUMBERS -->
-                <li class="page-item"
-                    th:each="i : ${#numbers.sequence(0,totalPages-1)}"
-                    th:classappend="${i == currentPage} ? 'active'">
-
+                <!-- Page Numbers -->
+                <li class="page-item" th:each="i : ${#numbers.sequence(1,page.getTotalPages())}"
+                    th:classappend="${currentPage == i} ? 'active'">
                     <a class="page-link"
                        th:href="@{/(pageNumber=${i},pageSize=5)}"
-                       th:text="${i+1}">
+                       th:text="${i}">
                     </a>
-
                 </li>
-
-                <!-- LAST BUTTON -->
+                <!-- Next -->
                 <li class="page-item"
-                    th:if="${currentPage < totalPages-1}">
-
+                    th:if="${currentPage < page.getTotalPages()}">
                     <a class="page-link"
-                       th:href="@{/(pageNumber=${totalPages-1},pageSize=5)}">
+                       th:href="@{/(pageNumber=${5},pageSize=5)}">
                         Last
                     </a>
-
                 </li>
-
             </ul>
-
         </div>
-
 
         <!-- RIGHT SIDE PAGE SEARCH -->
         <div class="col-md-6 text-right">
-
             <form method="get" action="/">
                 <input type="number"
                        name="pageNumber"
                        min="1"
-                       th:attr="max=${totalPages}"
+                       th:attr="max=${page.getTotalPages()}"
                        placeholder="Go To page"
-                       style="width:100px;padding:5px">
-
+                       style="width:115px;padding:5px">
                 <input type="hidden" name="pageSize" value="5">
-
                 <button class="btn btn-dark btn-sm">Go</button>
             </form>
 
             <span>
-      Page <b th:text="${currentPage+1}"></b>
-      of
-      <b th:text="${totalPages}"></b>
-    </span>
+            <p>
+            Showing
+            <b th:text="${page.number * page.size + 1}"></b>
+            to
+            <b th:text="${page.number * page.size + page.numberOfElements}"></b>
+            of
+            <b th:text="${page.totalElements}"></b>
+            </p>
+            </span>
 
         </div>
 

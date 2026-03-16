@@ -34,15 +34,15 @@ public class CustomerController {
             @RequestParam(defaultValue = "1") int pageNumber,
             @RequestParam(defaultValue = "5") int pageSize,
             Model model){
-        int pageIndex = Math.max(pageNumber - 1, 0);
-        System.out.println("pagenumber : "+pageIndex);
+        int pageIndex = pageNumber - 1;
+
+        System.out.println("pagenumber : "+pageNumber);
         System.out.println("pageSize : "+pageSize);
 
         Page<Customer> page = customerService.getAllCustomers(PageRequest.of(pageIndex,pageSize));
 
-        model.addAttribute("customers", page.getContent());
+        model.addAttribute("page", page);
         model.addAttribute("currentPage", pageNumber);
-        model.addAttribute("totalPages", page.getTotalPages());
 
         return "customers";
     }
@@ -61,7 +61,7 @@ public class CustomerController {
     @PostMapping("/customers")
     public String saveCustomer(@ModelAttribute("customer") Customer customer){
         customerService.saveCustomer(customer);
-        return "redirect:/customers";
+        return "redirect:/";
     }
 
     @GetMapping("/customers/edit/{id}")
@@ -85,7 +85,7 @@ public class CustomerController {
 
         //save updated customer object
         customerService.updateCustomer(existingCustomer);
-        return "redirect:/customers";
+        return "redirect:/";
     }
 
     //delete handler method
@@ -93,7 +93,7 @@ public class CustomerController {
     public String deleteCustomer(@PathVariable Long id){
 
         customerService.deleteCustomeById(id);
-        return "redirect:/customers";
+        return "redirect:/";
     }
 
     @GetMapping("/customers/search")
@@ -115,7 +115,7 @@ public class CustomerController {
         } else {
             // If no search term is provided, get all customers
 //            searchResults = customerService.getAllCustomers();
-            return "redirect:/customers";
+            return "redirect:/";
         }
 
         theModel.addAttribute("customers", searchResults);
