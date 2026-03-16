@@ -36,9 +36,6 @@ public class CustomerController {
             Model model){
         int pageIndex = pageNumber - 1;
 
-        System.out.println("pagenumber : "+pageNumber);
-        System.out.println("pageSize : "+pageSize);
-
         Page<Customer> page = customerService.getAllCustomers(PageRequest.of(pageIndex,pageSize));
 
         model.addAttribute("page", page);
