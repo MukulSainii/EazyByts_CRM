@@ -16,7 +16,7 @@ public class Customer {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
     @Column(name = "company")
     private String company;
@@ -69,5 +69,16 @@ public class Customer {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", company='" + company + '\'' +
+                '}';
     }
 }
